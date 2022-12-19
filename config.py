@@ -3,26 +3,18 @@ import sys
 
 import random
 import string
-
+from pathlib import Path
 class Config():
-    def __init__(self, fileName):
+    def __init__(self, filePath: Path):
 
         global cfg
 
         try:
-            with open(fileName, 'r') as ymlfile:
-                cfg = yaml.load(ymlfile)
+            with filePath.open("r") as f:
+                cfg = yaml.safe_load(f)
         except Exception as e:
             print(e)
             input("Press any key to exit the program")
-            sys.exit()
-
-        if not cfg['config']['connection']['Google API key']:
-            input('ERROR: Missing YouTube API v3 key in config file!')
-            sys.exit()
-
-        if not cfg['config']['connection']['Discord bot token']:
-            input('ERROR: Missing Discord bot token in config file!')
             sys.exit()
 
         if self.getDiscordChannelNr() == 0:
@@ -32,9 +24,6 @@ class Config():
         if self.getYouTubersNr() == 0:
             input('ERROR: No YouTubers found in config file list or missing information!')
             sys.exit()
-
-    def getConnectionData(self):
-        return [cfg['config']['connection']['Google API key'], cfg['config']['connection']['Discord bot token']]
 
     def getPingTime(self):
         return cfg['config']['main']['Ping Every x Minutes']

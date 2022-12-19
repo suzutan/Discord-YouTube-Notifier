@@ -4,13 +4,30 @@ import asyncio
 import sys
 from Implementation import YouTuber
 from config import Config
+from pathlib import Path
+import os
 
-config = Config('config.yml')
-client = discord.Client()
+intents = discord.Intents.default()
+intents.typing = False
+intents.presences = False
+
+config = Config(Path("config.yml"))
+client = discord.Client(intents=intents)
 youtubers = config.getYouTubersList() if (config.getYouTubersNr() != 0) else sys.exit()
 if (config.getDiscordChannelNr() == 0): sys.exit()
 id = ''
-GOOGLE_API = config.getConnectionData()[0]
+
+GOOGLE_API: str = os.environ.get('DYN_YOUTUBE_DATA_V3_API_TOKEN', None)
+DiscordAPIToken: str = os.environ.get('DYN_DISCORD_API_TOKEN', None)
+
+if not GOOGLE_API:
+    print("ERROR: Missing YouTube API v3 key in env:DYN_YOUTUBE_DATA_V3_API_TOKEN!")
+    sys.exit(1)
+
+if not DiscordAPIToken:
+    print("ERROR: Missing Discord bot token in env:DYN_DISCORD_API_TOKEN!")
+    sys.exit(1)
+
 pingEveryXMinutes = config.getPingTime()
 threads = []
 processes = []
@@ -51,7 +68,10 @@ async def update():
                         threads[item][3] = processes[item].liveId
                         for x in range (0, config.getDiscordChannelNr()):
                             livestream = config.getDiscordChannelList()[x]['Livestream'].format(threads[item][0]) + '\n{}'.format(processes[item].getVideoLink(processes[item].getUserLiveData()))
-                            await client.send_message(client.get_channel(str(config.getDiscordChannelList()[x]['channelID'])), livestream)
+                            channelID = config.getDiscordChannelList()[x]['channelID']
+                            print(channelID)
+                            await client.get_channel(channelID).send(livestream)
+                            await client.send_message(client.get_channel(channelID), livestream)
                 item += 1
         except:
             pass
@@ -71,4 +91,4 @@ async def on_ready():
     print('Bot running.')
     asyncio.ensure_future(update())
 
-client.run(config.getConnectionData()[1])
+client.run(DiscordAPIToken)
