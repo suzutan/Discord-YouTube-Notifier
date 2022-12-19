@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: discord-youtube-notifier
+  name: discord-youtube-notifier
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discord-youtube-notifier
+  template:
+    metadata:
+      labels:
+        app: discord-youtube-notifier
+    spec:
+      containers:
+      - envFrom:
+        - secretRef:
+            name: discord-youtube-notifier
+        image: ghcr.io/suzutan/discord-youtube-notifier/discord-youtube-notifier:latest
+        args: ["python3", "main.py", "/config.yaml"]
+        imagePullPolicy: Always
+        name: discord-youtube-notifier
+        volumeMounts:
+        - mountPath: /config.yaml
+          name: config
+          subPath: config.yaml
+      volumes:
+      - configMap:
+          name: discord-youtube-notifier
+        name: config

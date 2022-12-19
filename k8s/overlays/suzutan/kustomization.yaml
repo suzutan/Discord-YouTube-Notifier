@@ -1,0 +1,15 @@
+namespace: discord-youtube-notifier
+
+resources:
+- ../../base
+- secret
+
+commonLabels:
+  env: suzutan
+
+configMapGenerator:
+- name: discord-youtube-notifier
+  files:
+  - config.yaml
+
+namePrefix: suzutan-

@@ -1,0 +1,17 @@
+config:
+  main:
+    Ping Every x Minutes: 5 # 5-15 minutes should be ok, anything lower not recommended, because the API traffic will be used up very quickly otherwise.
+  Discord Channel:
+    0:
+      channelID: 1004769053782593627 #general-vc
+      New video: ":film_frames: **{0} が新しい動画を公開しました!** :film_frames:" # Message that appears when a YouTuber has uploaded a new video
+      Livestream: ":satellite: **{0} が配信を開始しました！ ** :satellite:" # Message that appears when a YouTuber is livestreaming
+      # My server content-sharing
+  YouTubers:
+    0:
+      name: "まろちゅ～る"
+      channelID: UCTrJuJiu9JG__utTyNS2kaw
+      # Some name
+    # 1:
+    #   name: # Name that will be displayed in discord, mentions can be used with <@DiscordUserID>
+    #   channelID: # YouTube Channel ID
