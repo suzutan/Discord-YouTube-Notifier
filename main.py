@@ -11,7 +11,7 @@ intents = discord.Intents.default()
 intents.typing = False
 intents.presences = False
 
-config = Config(Path("config.yml"))
+config = Config(Path(sys.argv[1] if len(sys.argv) > 1 else 'config.yml'))
 client = discord.Client(intents=intents)
 youtubers = config.getYouTubersList() if (config.getYouTubersNr() != 0) else sys.exit()
 if (config.getDiscordChannelNr() == 0): sys.exit()
