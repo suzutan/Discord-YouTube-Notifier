@@ -1,8 +1,8 @@
-namespace: discord-youtube-notifier
+namespace: marocat
 
 resources:
 - ../../base
-- secret
+- secret.yaml
 
 commonLabels:
   env: marocat
@@ -11,5 +11,3 @@ configMapGenerator:
 - name: discord-youtube-notifier
   files:
   - config.yaml
-
-namePrefix: marocat-
