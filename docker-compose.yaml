@@ -1,0 +1,11 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dyn
+    volumes:
+      - ./config-debug.yml:/config.yml
+    command: python3 main.py /config.yml
+    env_file:
+      - docker-compose.env

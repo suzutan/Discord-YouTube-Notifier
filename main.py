@@ -52,26 +52,19 @@ async def update():
     while True:
         try:
             waittime = pingEveryXMinutes * 60
-            item = 0
-            while item < config.getYouTubersNr():
+            for item in config.getYouTubersNr():
                 data = processes[item].update()
-                # print('Checking for new videos from {}'.format(threads[item][0]))
-                # if processes[item].isNewVideo():
-                #     print('{} HAS UPLOADED A NEW VIDEO! PUSHING UPDATE ON DISCORD.'.format(threads[item][0]))
-                #     for x in range (0, config.getDiscordChannelNr()):
-                #         newvideo = config.getDiscordChannelList()[x]['New video'].format(threads[item][0]) + '\n{}'.format(processes[item].getVideoLink(processes[item].videosData[0][1]))
-                #         await client.send_message(client.get_channel(str(config.getDiscordChannelList()[x]['channelID'])), newvideo)
-
                 if processes[item].isUserLive():
                     if not processes[item].liveId == threads[item][3]:
                         print('{} IS LIVESTREAMING NOW! PUSHING UPDATE ON DISCORD.'.format(threads[item][0]))
                         threads[item][3] = processes[item].liveId
+                        videoLink = processes[item].getVideoLink(processes[item].getUserLiveData())
                         for x in range (0, config.getDiscordChannelNr()):
-                            livestream = config.getDiscordChannelList()[x]['Livestream'].format(threads[item][0]) + '\n{}'.format(processes[item].getVideoLink(processes[item].getUserLiveData()))
+                            livestream = config.getDiscordChannelList()[x]['Livestream'].format(threads[item][0]) + '\n{}'.format(videoLink)
                             channelID = config.getDiscordChannelList()[x]['channelID']
                             print(channelID)
                             await client.get_channel(channelID).send(livestream)
-                item += 1
+
         except:
             pass
         while waittime > 0:

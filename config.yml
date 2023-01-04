@@ -5,7 +5,7 @@ config:
     0:
       channelID: 1049558478915633182 #配信通知
       New video: ":film_frames: **{0} が新しい動画を公開しました!** :film_frames:" # Message that appears when a YouTuber has uploaded a new video
-      Livestream: ":satellite: **{0} が配信を開始しました！ ** :satellite:" # Message that appears when a YouTuber is livestreaming
+      Livestream: "<@&1056189303589437562>\n:satellite: **{0} が配信を開始しました！ ** :satellite:" # Message that appears when a YouTuber is livestreaming
       # My server content-sharing
   YouTubers:
     0:

@@ -1,0 +1,17 @@
+config:
+  main:
+    Ping Every x Minutes: 5 # 5-15 minutes should be ok, anything lower not recommended, because the API traffic will be used up very quickly otherwise.
+  Discord Channel:
+    0:
+      channelID: 1056194343624507463 # general-vc
+      New video: ":film_frames: **{0} HAS UPLOADED A NEW VIDEO!** :film_frames:" # Message that appears when a YouTuber has uploaded a new video
+      Livestream: "<@&1056189303589437562>\n :red_circle: **{0} IS LIVESTREAMING NOW!** :red_circle:" # Message that appears when a YouTuber is livestreaming
+      # My server content-sharing
+  YouTubers:
+    # 0:
+    #   name: "まろちゅ～る"
+    #   channelID: UCTrJuJiu9JG__utTyNS2kaw
+    #   # Some name
+    0:
+      name: "suzuka"
+      channelID: UCPSCyrRaYEMMHWLkz0D9JmA
